@@ -1,32 +1,23 @@
-# Color Box Demo
+# Color Box
 
 ## Overview
-A tiny demo webpage with a centered square box and three buttons (Red, Green, Blue). Clicking a button changes the box color.
+Color Box is a lightweight web app for quickly previewing any CSS color inside a sleek, elevated panel. Enter a color, apply it to the preview box, and see the current value at a glance.
+
+Round 2 adds a dynamic “Current color” label beneath the preview and a Random button that picks a new color instantly.
 
 ## Setup
-- No build or dependencies.
-- Download this folder and open `index.html` in any modern browser.
+- No build steps required.
+- Download or clone the project and open index.html in any modern browser.
 
 ## Usage
-- Click Red, Green, or Blue to change the box color.
+- Type any valid CSS color (hex, rgb(a), hsl(a), or a named color) into the input.
+- Click Apply or press Enter to update the preview box.
+- The label beneath the box will update to show “Current color: <color>”.
+- Click Random to generate and apply a random hex color.
 
-## License (MIT)
-Copyright (c) 2025
+Tip: Examples include #ff6600, rgb(34,197,94), hsl(200 90% 50%), or tomato.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the “Software”), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+## Improvements in Round 2
+- Added a dynamic text label beneath the color box showing “Current color: <color>”.
+- Introduced a Random button that picks and applies a random color.
+- The label updates consistently whether the color is applied manually or via the Random button.
