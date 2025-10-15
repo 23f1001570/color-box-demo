@@ -1,74 +1,359 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Color Box Demo</title>
+  <title>Color Box</title>
   <style>
-    :root { --box-size: 200px; --gap: 16px; }
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #6366f1;
+      --accent-700: #4f46e5;
+      --border: #1f2937;
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: #f9fafb;
-      color: #111;
-      min-height: 100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 20% -10%, #1f2937, transparent),
+                  radial-gradient(1000px 600px at 120% 10%, #0b1220, transparent),
+                  var(--bg);
+      color: var(--text);
       display: grid;
       place-items: center;
+      padding: 24px;
     }
-    .wrap { text-align: center; padding: 24px; }
-    h1 { font-size: 1.5rem; margin: 0 0 var(--gap); }
-    .box {
-      width: var(--box-size);
-      height: var(--box-size);
-      margin: 0 auto var(--gap);
-      border-radius: 12px;
-      border: 2px solid #ddd;
-      background: #e9ecef;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      transition: background-color .2s ease, border-color .2s ease;
+
+    .app {
+      width: 100%;
+      max-width: 720px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      padding: 24px;
+      backdrop-filter: blur(8px);
     }
-    .controls {
+
+    .header {
       display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
     }
-    button {
-      padding: 8px 14px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: #fff;
+
+    .logo {
+      display: inline-grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: radial-gradient(120% 160% at 20% 20%, #818cf8, #4338ca);
+      color: white;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 20px rgba(99,102,241,0.5);
+      user-select: none;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      letter-spacing: 0.2px;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 720px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .preview {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .box {
+      height: 220px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 10px 30px rgba(0,0,0,0.25);
+      transition: transform 160ms ease, box-shadow 200ms ease, background-color 150ms ease;
+      background: var(--accent-700);
+    }
+
+    .box:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 16px 40px rgba(0,0,0,0.35);
+    }
+
+    .label {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .label strong {
+      color: var(--text);
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    .controls {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .input {
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(17,24,39,0.65);
+      color: var(--text);
+      outline: none;
+      transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+      font-size: 0.98rem;
+    }
+
+    .input:focus {
+      border-color: rgba(99,102,241,0.6);
+      box-shadow: 0 0 0 4px rgba(99,102,241,0.15);
+      background: rgba(17,24,39,0.9);
+    }
+
+    .input.invalid {
+      border-color: rgba(239,68,68,0.8);
+      box-shadow: 0 0 0 4px rgba(239,68,68,0.18);
+    }
+
+    .hint {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .error {
+      font-size: 0.85rem;
+      color: var(--danger);
+      min-height: 1em;
+    }
+
+    .btn {
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: linear-gradient(180deg, var(--accent), var(--accent-700));
+      color: white;
       cursor: pointer;
       font-weight: 600;
-      transition: border-color .2s, transform .02s;
+      letter-spacing: 0.2px;
+      transition: transform 120ms ease, box-shadow 160ms ease, filter 160ms ease;
+      white-space: nowrap;
     }
-    button:hover { border-color: #aaa; }
-    button:active { transform: translateY(1px); }
-    .btn-red { color: #b00020; }
-    .btn-green { color: #0f7b0f; }
-    .btn-blue { color: #0b5bbb; }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(99,102,241,0.35);
+      filter: brightness(1.03);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 18px rgba(99,102,241,0.25);
+      filter: brightness(0.98);
+    }
+
+    .btn.secondary {
+      background: linear-gradient(180deg, #374151, #1f2937);
+      color: #e5e7eb;
+      border: 1px solid #2a3443;
+      box-shadow: none;
+    }
+
+    .btn.secondary:hover {
+      box-shadow: 0 10px 18px rgba(0,0,0,0.25);
+    }
+
+    .footnote {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    code.kbd {
+      background: rgba(255,255,255,0.06);
+      padding: 2px 6px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.1);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.86em;
+    }
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <h1>Color Box Demo</h1>
-    <div id="box" class="box" role="img" aria-label="Color box"></div>
-    <div class="controls" aria-label="Color controls">
-      <button class="btn-red" data-color="#e53935" aria-label="Red">Red</button>
-      <button class="btn-green" data-color="#43a047" aria-label="Green">Green</button>
-      <button class="btn-blue" data-color="#1e88e5" aria-label="Blue">Blue</button>
+  <main class="app" role="application" aria-label="Color Box App">
+    <div class="header">
+      <div class="logo" aria-hidden="true">CB</div>
+      <div>
+        <h1>Color Box</h1>
+        <div class="sub">Preview and pick a color. Now with a live label and Random.</div>
+      </div>
     </div>
+
+    <section class="content">
+      <div class="preview">
+        <div id="colorBox" class="box" role="img" aria-label="Color preview box"></div>
+        <div class="label" aria-live="polite">
+          Current color: <strong id="currentColorValue">#4f46e5</strong>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="row">
+          <input id="colorInput" class="input" type="text" placeholder="Enter any valid CSS color (e.g., #ff6600, rgb(34,197,94), or 'tomato')" aria-label="Color input" />
+          <button id="applyBtn" class="btn" type="button" aria-label="Apply color">Apply</button>
+          <button id="randomBtn" class="btn secondary" type="button" aria-label="Pick a random color">Random</button>
+        </div>
+        <div id="errorMsg" class="error" role="status" aria-live="polite"></div>
+        <div class="hint">Tip: Press <code class="kbd">Enter</code> to apply.</div>
+        <div class="footnote">Accepts any valid CSS color format: hex, rgb(a), hsl(a), or named colors.</div>
+      </div>
+    </section>
   </main>
+
   <script>
     (function () {
-      const box = document.getElementById('box');
-      document.querySelector('.controls').addEventListener('click', (e) => {
-        const btn = e.target.closest('button[data-color]');
-        if (!btn) return;
-        const color = btn.getAttribute('data-color');
-        box.style.backgroundColor = color;
-        box.style.borderColor = color;
+      const DEFAULT = '#4f46e5';
+
+      const box = document.getElementById('colorBox');
+      const input = document.getElementById('colorInput');
+      const applyBtn = document.getElementById('applyBtn');
+      const randomBtn = document.getElementById('randomBtn');
+      const errorMsg = document.getElementById('errorMsg');
+      const currentVal = document.getElementById('currentColorValue');
+
+      function isValidCssColor(value) {
+        const s = new Option().style;
+        s.color = '';
+        s.color = value;
+        return s.color !== '';
+      }
+
+      function setCurrentLabel(colorString) {
+        currentVal.textContent = colorString;
+      }
+
+      function setBoxColor(colorString) {
+        box.style.background = colorString;
+      }
+
+      function clearError() {
+        input.classList.remove('invalid');
+        errorMsg.textContent = '';
+      }
+
+      function showError(msg) {
+        input.classList.add('invalid');
+        errorMsg.textContent = msg;
+      }
+
+      function applyColor(raw) {
+        const value = String(raw || '').trim();
+        if (!value) {
+          showError('Please enter a color.');
+          return false;
+        }
+        if (!isValidCssColor(value)) {
+          showError('Invalid CSS color. Try examples like #ff6600, rgb(34,197,94), or tomato.');
+          return false;
+        }
+        clearError();
+        setBoxColor(value);
+        setCurrentLabel(value);
+        return true;
+      }
+
+      function randomHexColor() {
+        const n = Math.floor(Math.random() * 0xffffff);
+        const hex = '#' + n.toString(16).padStart(6, '0');
+        return hex;
+      }
+
+      // Events
+      applyBtn.addEventListener('click', () => {
+        applyColor(input.value);
       });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          applyColor(input.value);
+        }
+      });
+
+      randomBtn.addEventListener('click', () => {
+        const hex = randomHexColor();
+        clearError();
+        input.value = hex;
+        setBoxColor(hex);
+        setCurrentLabel(hex);
+      });
+
+      // Initialize
+      function init() {
+        input.value = DEFAULT;
+        setBoxColor(DEFAULT);
+        setCurrentLabel(DEFAULT);
+      }
+      init();
     })();
   </script>
 </body>
